@@ -59,14 +59,14 @@ if ($result -eq -1 -or $result -eq 1) {
         
         # Create new task
         $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$psPath`""
-        $trigger = New-ScheduledTaskTrigger -Daily -At "23:00"
+        $trigger = New-ScheduledTaskTrigger -Daily -At "22:00"
         $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
         $principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount -RunLevel Highest
         
         Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal | Out-Null
         
         Write-Host "✅ AutoShutdown installed successfully!" -ForegroundColor Green
-        Write-Host "Your PC will now show a shutdown prompt every day at 11:00 PM." -ForegroundColor Green
+        Write-Host "Your PC will now show a shutdown prompt every day at 10:00 PM." -ForegroundColor Green
         
     } catch {
         Write-Host "❌ Installation failed: $($_.Exception.Message)" -ForegroundColor Red
@@ -108,7 +108,7 @@ function Check-Status {
         
         if ($existingTask) {
             Write-Host "✅ AutoShutdown is ACTIVE" -ForegroundColor Green
-            Write-Host "Will show shutdown prompt at 11:00 PM daily." -ForegroundColor Green
+            Write-Host "Will show shutdown prompt at 10:00 PM daily." -ForegroundColor Green
             Write-Host "Force shutdown enabled - will close all apps without saving." -ForegroundColor Yellow
         } else {
             Write-Host "❌ AutoShutdown is NOT installed" -ForegroundColor Red
